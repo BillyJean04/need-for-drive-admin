@@ -30,3 +30,12 @@ ul {
 li {
   list-style: none;
 }
+
+.your-custom-class {
+:global {
+  color:#fff;
+  .ant-btn {
+    border: 1px dashed red;
+  }
+}
+}
