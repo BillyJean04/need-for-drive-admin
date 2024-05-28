@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.png";
 import { sleep } from "@/utils";
+import { routesPaths } from "@/utils/consts/routes";
 
 import { StyledButton, StyledCard, StyledSignInContainer, StyledTitle } from "./SignUp.styled";
 
@@ -20,10 +21,11 @@ export function SignUp() {
 
   const onFinish: FormProps<FieldType>["onFinish"] = () => {
     setIsLoading(true);
-    sleep(1000).then(() => {
-      setIsLoading(false);
-      navigate("/");
-    });
+    sleep(1000)
+      .then(() => {
+        navigate(routesPaths.signIn);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -50,6 +52,10 @@ export function SignUp() {
                 max: 150,
                 message: "Пожалуйста введите корректную почту!",
               },
+              {
+                max: 150,
+                message: "Длина почты не должна превышать 150 символов!",
+              },
             ]}
           >
             <Input placeholder="qwerty@gmail.com" />
@@ -60,9 +66,12 @@ export function SignUp() {
             rules={[
               {
                 whitespace: false,
-                max: 150,
                 required: true,
                 message: "Пожалуйста введите пароль!",
+              },
+              {
+                max: 150,
+                message: "Длина пароля не должна превышать 150 символов!",
               },
             ]}
           >
@@ -75,9 +84,12 @@ export function SignUp() {
             rules={[
               {
                 whitespace: false,
-                max: 150,
                 required: true,
                 message: "Пожалуйста подтвердите пароль!",
+              },
+              {
+                max: 150,
+                message: "Длина пароля не должна превышать 150 символов!",
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
@@ -93,7 +105,7 @@ export function SignUp() {
           </Form.Item>
           <Flex justify="space-between" align="center">
             <Flex vertical>
-              <Typography.Link onClick={() => navigate("/")}>Войти</Typography.Link>
+              <Typography.Link onClick={() => navigate(routesPaths.signIn)}>Войти</Typography.Link>
             </Flex>
             <Form.Item style={{ margin: 0 }}>
               <StyledButton loading={isLoading} type="primary" htmlType="submit" size="large">

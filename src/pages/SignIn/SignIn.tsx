@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.png";
 import { useAuth } from "@/hooks";
+import { routesPaths } from "@/utils/consts/routes";
 
 import { StyledButton, StyledCard, StyledSignInContainer, StyledTitle } from "./SignIn.styled";
 
@@ -22,14 +23,11 @@ export function SignIn() {
     setIsLoading(true);
 
     auth
-      ?.login({ username: values.email, password: values.password.trim() })
+      ?.login({ username: values.email.trim(), password: values.password.trim() })
       .then(() => {
-        setIsLoading(false);
-        navigate("/home");
+        navigate(routesPaths.home);
       })
-      .catch(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -52,9 +50,12 @@ export function SignIn() {
               {
                 type: "email",
                 whitespace: false,
-                max: 150,
                 required: true,
                 message: "Введите корректную почту!",
+              },
+              {
+                max: 150,
+                message: "Длина почты не должна превышать 150 символов!",
               },
             ]}
           >
@@ -66,9 +67,12 @@ export function SignIn() {
             rules={[
               {
                 whitespace: false,
-                max: 150,
                 required: true,
                 message: "Введите пароль!",
+              },
+              {
+                max: 150,
+                message: "Длина пароля не должна превышать 150 символов!",
               },
             ]}
           >
@@ -76,7 +80,7 @@ export function SignIn() {
           </Form.Item>
           <Flex justify="space-between" align="center">
             <Flex vertical>
-              <Typography.Link onClick={() => navigate("/signup")}>
+              <Typography.Link onClick={() => navigate(routesPaths.signUp)}>
                 Зарегистрироваться
               </Typography.Link>
             </Flex>

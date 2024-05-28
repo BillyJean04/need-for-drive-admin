@@ -73,7 +73,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           method: "POST",
           headers: new Headers(getHeaders(accessToken, "Bearer")),
         });
-      } catch (error) {
+      } catch {
+        removeCookies();
+      } finally {
         removeCookies();
       }
     };

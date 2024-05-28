@@ -1,18 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Home, SignIn, SignUp } from "@/pages";
+import { routesPaths } from "@/utils/consts/routes";
+
+const { signIn, signUp, home } = routesPaths;
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: signIn,
     element: <SignIn />,
   },
   {
-    path: "/signup",
+    path: signUp,
     element: <SignUp />,
   },
   {
-    path: "/home",
+    path: home,
     element: <Home />,
   },
 ]);
