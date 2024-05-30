@@ -3,5 +3,7 @@ const basePath = process.env.NODE_ENV === "production" ? process.env.PRODUCTION_
 export const routesPaths = {
   signIn: `${basePath}`,
   signUp: `${basePath}signup`,
-  home: `${basePath}home`,
+  dashboard: `${basePath}dashboard`,
+  orders: `${basePath}dashboard/orders`,
+  order: `${basePath}dashboard/orders/:id`,
 };

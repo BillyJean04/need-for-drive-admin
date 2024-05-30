@@ -5,4 +5,5 @@ export enum Urls {
   login = "/auth/login",
   logout = "/auth/logout",
   refresh = "/auth/refresh",
+  orders = "/db/order",
 }

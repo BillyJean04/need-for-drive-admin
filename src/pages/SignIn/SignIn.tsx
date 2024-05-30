@@ -25,7 +25,7 @@ export function SignIn() {
     auth
       ?.login({ username: values.email.trim(), password: values.password.trim() })
       .then(() => {
-        navigate(routesPaths.home);
+        navigate(routesPaths.dashboard);
       })
       .finally(() => setIsLoading(false));
   };
