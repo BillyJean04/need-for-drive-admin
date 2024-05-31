@@ -14,6 +14,11 @@ export const StyledSelectsContainer = styled.div`
   gap: 15px;
   padding-bottom: 15px;
   flex-wrap: wrap;
+
+  .ant-select {
+    width: 110px;
+    height: 30px;
+  }
 `;
 
 export const StyledFilterButtons = styled.div`
