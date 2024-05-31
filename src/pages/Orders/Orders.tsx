@@ -23,15 +23,11 @@ interface TableParams {
 }
 
 export function Orders() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [isFilterSelected, setIsFilterSelected] = useState<boolean>(false);
 
-  const [filters, setFilters] = useState({
-    model: "",
-    city: "",
-    color: "",
-  });
+  const [filters, setFilters] = useState<{ model?: number; city?: number; status?: number }>({});
 
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -40,14 +36,25 @@ export function Orders() {
     },
   });
 
+  const filterParams =
+    (isFilterSelected && filters.city) ||
+    (isFilterSelected && filters.model) ||
+    (isFilterSelected && filters.status);
+
   const { data: orders, isLoading } = useQuery({
-    queryKey: ["orders", page, limit],
+    queryKey: ["orders", page, limit, filterParams],
     queryFn: () =>
       fetcher<OrderApi>({
         endpoint: Urls.orders,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
-        params: qs.stringify({ page, limit }),
+        params: qs.stringify({
+          page,
+          limit,
+          cityId: filters.city,
+          carId: filters.model,
+          orderStatusId: filters.status,
+        }),
       }).then((res) => {
         setTableParams({
           ...tableParams,
@@ -72,19 +79,7 @@ export function Orders() {
     }
   };
 
-  const transformedOrders = useMemo(() => {
-    if (isFilterSelected) {
-      const filtered = orders?.data?.filter(
-        (order) =>
-          order.carId.name.toLowerCase().includes(filters.model.toLowerCase()) &&
-          order.cityId.name.toLowerCase().includes(filters.city.toLowerCase()) &&
-          order.color.toLowerCase().includes(filters.color.toLowerCase()),
-      );
-
-      return transformOrders(filtered);
-    }
-    return transformOrders(orders?.data);
-  }, [filters.city, filters.color, filters.model, isFilterSelected, orders?.data]);
+  const transformedOrders = useMemo(() => transformOrders(orders?.data), [orders?.data]);
 
   const handleClickSubmitFilter = () => {
     setIsFilterSelected(true);
@@ -92,7 +87,6 @@ export function Orders() {
   const handleClickResetFilters = () => {
     setIsFilterSelected(false);
   };
-
   return (
     <StyledOrdersContainer>
       <Typography.Title level={2}>Заказы</Typography.Title>

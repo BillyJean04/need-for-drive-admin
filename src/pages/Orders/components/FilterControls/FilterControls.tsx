@@ -10,11 +10,11 @@ import { filterOptions } from "./filterOptions";
 
 export interface FilterControlsProps {
   filters: {
-    model: string;
-    city: string;
-    color: string;
+    model?: number;
+    city?: number;
+    status?: number;
   };
-  setFilters: Dispatch<SetStateAction<{ model: string; city: string; color: string }>>;
+  setFilters: Dispatch<SetStateAction<{ model?: number; city?: number; status?: number }>>;
   handleClickSubmitFilter: () => void;
   handleClickResetFilters: () => void;
 }
@@ -26,21 +26,16 @@ export function FilterControls({
   handleClickResetFilters,
 }: FilterControlsProps) {
   const isSomeFilterSelected = useMemo(
-    () => !!filters.model || !!filters.city || !!filters.color,
-    [filters.city, filters.color, filters.model],
+    () => !!filters.model || !!filters.city || !!filters.status,
+    [filters.city, filters.status, filters.model],
   );
 
   const resetFilters = () => {
-    setFilters({
-      city: "",
-      model: "",
-      color: "",
-    });
-
+    setFilters({});
     handleClickResetFilters();
   };
 
-  const { model, color, city } = filterOptions;
+  const { model, status, city } = filterOptions;
 
   return (
     <StyledTableFilterControls>
@@ -60,11 +55,11 @@ export function FilterControls({
           options={city}
         />
         <Select
-          placeholder="Цвет"
+          placeholder="Статус"
           optionFilterProp="children"
-          onChange={(value) => setFilters({ ...filters, color: value })}
-          value={filters.color || null}
-          options={color}
+          onChange={(value) => setFilters({ ...filters, status: value })}
+          value={filters.status || null}
+          options={status}
         />
       </StyledSelectsContainer>
       <StyledFilterButtons>
