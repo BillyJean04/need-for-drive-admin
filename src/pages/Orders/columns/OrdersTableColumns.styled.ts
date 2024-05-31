@@ -14,9 +14,8 @@ export const StyledRadioButtonGroup = styled(Radio.Group)`
       align-items: center;
       gap: 3px;
 
-      ${mixins.textMixin({ $fontWeight: 500 })};
+      font-weight: 500;
     }
-    color: ${({ theme }) => theme.colors.darkBlue};
   }
 
   label:nth-child(1) {
@@ -42,6 +41,7 @@ export const StyledRadioButtonGroup = styled(Radio.Group)`
   label:nth-child(2):hover {
     color: ${({ theme }) => theme.colors.red};
   }
+
   label:nth-child(3) {
     span:last-child {
       svg {
@@ -74,8 +74,8 @@ export const StyledCheckboxContainer = styled.div`
 `;
 
 export const StyledCheckbox = styled(Checkbox)<{ $checked: boolean }>`
+  ${mixins.textMixin({ $fontWeight: 500, $color: "gray" })};
   color: ${({ theme, $checked }) => ($checked ? theme.colors.black : theme.colors.gray)};
-  ${mixins.textMixin({ $fontWeight: 500 })};
 
   pointer-events: none;
   span:first-child {

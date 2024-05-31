@@ -18,6 +18,10 @@ export const StyledSelectsContainer = styled.div`
   .ant-select {
     width: 110px;
     height: 30px;
+
+    @media (max-width: ${({ theme }) => theme.device.mobileL}) {
+      width: 100%;
+    }
   }
 `;
 
@@ -25,4 +29,9 @@ export const StyledFilterButtons = styled.div`
   display: flex;
   gap: 15px;
   padding-bottom: 15px;
+
+  @media (max-width: ${({ theme }) => theme.device.mobileL}) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;

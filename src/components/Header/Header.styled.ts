@@ -40,6 +40,10 @@ export const StyledNotificationContainer = styled.div`
   padding: 0 26px;
   position: relative;
   cursor: pointer;
+
+  @media (max-width: ${({ theme }) => theme.device.mobileM}) {
+    display: none;
+  }
 `;
 
 export const StyledDropdown = styled(Dropdown)`
