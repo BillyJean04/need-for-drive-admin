@@ -97,8 +97,9 @@ export const StyledOrderInfo = styled.div`
 `;
 
 export const StyledOrderItemImage = styled.img`
-  max-width: 138px;
-  height: 63px;
+  height: 90px;
+  max-width: 160px;
+
   object-fit: contain;
 
   flex: 1;
