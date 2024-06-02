@@ -5,7 +5,12 @@ export const StyledLayout = styled(Layout)`
   height: 100dvh;
 `;
 
-export const StyledLayoutContent = styled(Layout.Content)`
-  margin: 24px 16px 0;
+export const StyledLayoutContent = styled(Layout.Content)<{ $isDashboard: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 0 0;
   overflow-y: auto;
+
+  justify-content: ${({ $isDashboard }) => ($isDashboard ? "flex-end" : "space-between")};
 `;

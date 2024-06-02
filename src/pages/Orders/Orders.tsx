@@ -1,119 +1,58 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { Card, GetProp, Table, TablePaginationConfig, TableProps, Typography } from "antd";
-import Cookies from "js-cookie";
-import qs from "qs";
-import { useMemo, useState } from "react";
+import { Card, Empty, Pagination, Typography } from "antd";
+import { useState } from "react";
 
-import { OrderApi } from "@/types/api";
-import { getHeaders } from "@/utils";
-import { Urls } from "@/utils/consts/urls";
-import { fetcher } from "@/utils/fetcher";
+import { useOrdersQuery } from "@/hooks";
+import { createRenderArray } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";
 
-import { getOrdersColumns } from "./columns";
-import { FilterControls } from "./components/FilterControls";
-import { StyledOrdersContainer } from "./Orders.styled";
-import { transformOrders } from "./transformOrders";
-
-interface TableParams {
-  pagination?: TablePaginationConfig;
-  sortField?: string;
-  sortOrder?: string;
-  filters?: Parameters<GetProp<TableProps, "onChange">>[1];
-}
+import { FilterControls, OrderItem, OrderItemSkeleton } from "./components";
+import {
+  StyledEmptyData,
+  StyledOrdersContainer,
+  StyledOrdersItemsContainer,
+} from "./Orders.styled";
 
 export function Orders() {
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(5);
-  const [isFilterSelected, setIsFilterSelected] = useState<boolean>(false);
-
+  const [totalPages, setTotalPages] = useState(0);
   const [filters, setFilters] = useState<{ model?: number; city?: number; status?: number }>({});
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: page,
-      pageSize: limit,
-    },
+  const { orders, setPage, setLimit, limit, total, isLoading } = useOrdersQuery({
+    filters,
+    isFilterApplied,
   });
 
-  const filterParams =
-    (isFilterSelected && filters.city) ||
-    (isFilterSelected && filters.model) ||
-    (isFilterSelected && filters.status);
-
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ["orders", page, limit, filterParams],
-    queryFn: () =>
-      fetcher<OrderApi>({
-        endpoint: Urls.orders,
-        headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
-        method: "GET",
-        params: qs.stringify({
-          page,
-          limit,
-          cityId: filters.city,
-          carId: filters.model,
-          orderStatusId: filters.status,
-        }),
-      }).then((res) => {
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: res.count,
-          },
-        });
-        return res;
-      }),
-    placeholderData: keepPreviousData,
-  });
-
-  const handleTableChange: TableProps["onChange"] = (pagination, sorter) => {
-    setTableParams({
-      pagination,
-      ...sorter,
-    });
-
-    if (pagination.current) {
-      setPage(pagination.current);
-    }
-  };
-
-  const transformedOrders = useMemo(() => transformOrders(orders?.data), [orders?.data]);
-
-  const handleClickSubmitFilter = () => {
-    setIsFilterSelected(true);
-  };
-  const handleClickResetFilters = () => {
-    setIsFilterSelected(false);
-  };
   return (
     <StyledOrdersContainer>
       <Typography.Title level={2}>Заказы</Typography.Title>
       <Card>
         <FilterControls
-          handleClickSubmitFilter={handleClickSubmitFilter}
-          handleClickResetFilters={handleClickResetFilters}
           filters={filters}
           setFilters={setFilters}
+          setIsFilterApplied={setIsFilterApplied}
         />
-        <Table
-          showHeader={false}
-          pagination={{
-            position: ["bottomCenter"],
-            current: page,
-            ...tableParams.pagination,
-            onChange: (_, pageSize) => setLimit(pageSize),
-            pageSizeOptions: ["5", "10", "25", "50"],
-            defaultPageSize: 5,
-            locale: { items_per_page: "" },
-            itemRender,
+        <StyledOrdersItemsContainer>
+          {isLoading && createRenderArray(limit).map((item) => <OrderItemSkeleton key={item} />)}
+          {orders?.map((order) => <OrderItem key={order.id} order={order} />)}
+        </StyledOrdersItemsContainer>
+        {!isLoading && orders?.length === 0 && (
+          <StyledEmptyData>
+            <Empty description="Нет данных" />
+          </StyledEmptyData>
+        )}
+        <Pagination
+          showLessItems
+          itemRender={itemRender}
+          defaultPageSize={5}
+          responsive
+          hideOnSinglePage
+          total={total ?? totalPages}
+          onChange={(page, pageSize) => {
+            setPage(page - 1);
+            setLimit(pageSize);
+            setTotalPages((prev) => total ?? prev);
           }}
-          dataSource={transformedOrders}
-          columns={getOrdersColumns()}
-          onChange={handleTableChange}
-          loading={isLoading}
-          scroll={{ x: 1400 }}
+          showSizeChanger={false}
         />
       </Card>
     </StyledOrdersContainer>

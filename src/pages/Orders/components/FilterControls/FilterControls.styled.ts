@@ -16,7 +16,7 @@ export const StyledSelectsContainer = styled.div`
   flex-wrap: wrap;
 
   .ant-select {
-    width: 110px;
+    width: 150px;
     height: 30px;
 
     @media (max-width: ${({ theme }) => theme.device.mobileL}) {

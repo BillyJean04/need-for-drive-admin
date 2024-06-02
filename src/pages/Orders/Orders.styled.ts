@@ -7,6 +7,9 @@ export const StyledOrdersContainer = styled.div`
   flex-direction: column;
   padding: 0 27px;
 
+  @media (max-width: ${({ theme }) => theme.device.mobileM}) {
+    padding: 0 10px;
+  }
   .ant-typography {
     ${mixins.textMixin({ $color: "darkBlue", $fontSize: "font-30" })};
   }
@@ -55,8 +58,23 @@ export const StyledOrdersContainer = styled.div`
   }
 
   .ant-pagination {
-    // override default ant design sider styles
+    display: flex;
+    justify-content: center;
+
+    // override default ant design styles
     margin-top: 30px !important;
     margin-bottom: 0 !important;
   }
+`;
+
+export const StyledOrdersItemsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledEmptyData = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
 `;

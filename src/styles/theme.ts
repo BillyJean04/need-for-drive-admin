@@ -20,6 +20,8 @@ export const theme = {
     lightBlue: "#767F9D",
     lighterGray: "#f0f0f0",
     lightGray: "#CACEDB",
+    menuBorder: "#e1e5eb",
+    menuItemBg: "#fbfbfb",
     gray: "#999999",
     red: "#C4183C",
     green: "#17C671",

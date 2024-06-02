@@ -1,12 +1,16 @@
 import { Layout } from "antd";
 import styled from "styled-components";
 
-export const StyledSidebar = styled(Layout.Sider)`
+export const StyledSidebar = styled(Layout.Sider)<{ $isCollapsed: boolean }>`
   @media (max-width: ${({ theme }) => theme.device.laptop}) {
-    // override default ant design sider styles
+    display: ${({ $isCollapsed }) => ($isCollapsed ? "none" : "block")};
+    max-height: max-content;
+
+    // override default ant design styles
     position: absolute !important;
+    max-width: 100% !important;
     width: 100% !important;
-    height: 100% !important;
+    inset: 64px 0;
     z-index: 100;
   }
 
@@ -21,15 +25,19 @@ export const StyledLogoContainer = styled.div`
   padding-left: 50px;
   margin: 16px 0;
 
+  @media (max-width: ${({ theme }) => theme.device.laptop}) {
+    display: none;
+  }
+
   a {
     display: flex;
     align-self: self-start;
 
     path:first-child {
-      fill: #3d5170;
+      fill: ${({ theme }) => theme.colors.darkBlue};
     }
     path:last-child {
-      fill: #0ec261;
+      fill: ${({ theme }) => theme.colors.green};
     }
   }
 `;

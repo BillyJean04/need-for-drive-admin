@@ -1,12 +1,13 @@
 import { Button, Select } from "antd";
 import { Dispatch, SetStateAction, useMemo } from "react";
 
+import { useOrdersFilters } from "@/hooks";
+
 import {
   StyledFilterButtons,
   StyledSelectsContainer,
   StyledTableFilterControls,
 } from "./FilterControls.styled";
-import { filterOptions } from "./filterOptions";
 
 export interface FilterControlsProps {
   filters: {
@@ -15,27 +16,16 @@ export interface FilterControlsProps {
     status?: number;
   };
   setFilters: Dispatch<SetStateAction<{ model?: number; city?: number; status?: number }>>;
-  handleClickSubmitFilter: () => void;
-  handleClickResetFilters: () => void;
+  setIsFilterApplied: Dispatch<SetStateAction<boolean>>;
 }
 
-export function FilterControls({
-  filters,
-  setFilters,
-  handleClickSubmitFilter,
-  handleClickResetFilters,
-}: FilterControlsProps) {
+export function FilterControls({ filters, setFilters, setIsFilterApplied }: FilterControlsProps) {
   const isSomeFilterSelected = useMemo(
     () => !!filters.model || !!filters.city || !!filters.status,
     [filters.city, filters.status, filters.model],
   );
 
-  const resetFilters = () => {
-    setFilters({});
-    handleClickResetFilters();
-  };
-
-  const { model, status, city } = filterOptions;
+  const { models, cities, status } = useOrdersFilters();
 
   return (
     <StyledTableFilterControls>
@@ -44,7 +34,7 @@ export function FilterControls({
           placeholder="Марка"
           optionFilterProp="children"
           onChange={(value) => setFilters({ ...filters, model: value })}
-          options={model}
+          options={models}
           value={filters.model || null}
         />
         <Select
@@ -52,7 +42,7 @@ export function FilterControls({
           optionFilterProp="children"
           onChange={(value) => setFilters({ ...filters, city: value })}
           value={filters.city || null}
-          options={city}
+          options={cities}
         />
         <Select
           placeholder="Статус"
@@ -63,11 +53,18 @@ export function FilterControls({
         />
       </StyledSelectsContainer>
       <StyledFilterButtons>
-        <Button onClick={handleClickSubmitFilter} type="primary">
+        <Button type="primary" onClick={() => setIsFilterApplied(true)}>
           Применить
         </Button>
         {isSomeFilterSelected && (
-          <Button onClick={resetFilters} type="primary" danger>
+          <Button
+            onClick={() => {
+              setFilters({});
+              setIsFilterApplied(false);
+            }}
+            type="primary"
+            danger
+          >
             Отменить
           </Button>
         )}

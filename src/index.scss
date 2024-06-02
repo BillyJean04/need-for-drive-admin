@@ -1,5 +1,5 @@
 $bgColor: #F5F6F8;
-
+$mobileM: 375px;
 * {
   box-sizing: border-box;
 }
@@ -34,10 +34,10 @@ li {
   list-style: none;
 }
 
-.logout-button {
-  width: 100%;
-  border: 0;
-  background: none;
-  text-align: start;
-  font-weight: 700;
+.ant-dropdown-menu-item:first-child {
+  @media (min-width: $mobileM) {
+    // override default ant design styles
+    display: none !important;
+  }
 }
+

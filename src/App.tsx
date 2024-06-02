@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConfigProvider, Empty } from "antd";
+import { ConfigProvider } from "antd";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
@@ -14,10 +14,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <ConfigProvider
-            theme={themeConfig}
-            renderEmpty={() => <Empty description="Нет данных" />}
-          >
+          <ConfigProvider theme={themeConfig}>
             <RouterProvider router={router} />
           </ConfigProvider>
         </ThemeProvider>

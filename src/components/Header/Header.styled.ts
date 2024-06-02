@@ -9,6 +9,11 @@ export const StyledHeader = styled(Layout.Header)`
 
   gap: 25px;
 
+  @media (max-width: ${({ theme }) => theme.device.laptop}) {
+    // override default ant design styles
+    padding: 0 25px !important;
+  }
+
   .ant-layout-header {
     display: flex;
     align-items: center;
@@ -28,6 +33,30 @@ export const StyledInputContainer = styled.div`
 
   .ant-input {
     color: ${({ theme }) => theme.colors.lightBlue};
+  }
+
+  @media (max-width: ${({ theme }) => theme.device.mobileM}) {
+    border-right: 1px solid ${({ theme }) => theme.colors.lightGray};
+  }
+`;
+
+export const StyledLogoIconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-right: 1px solid ${({ theme }) => theme.colors.lightGray};
+
+  @media (min-width: ${({ theme }) => theme.device.laptop}) {
+    display: none;
+  }
+
+  padding-right: 25px;
+  svg {
+    width: 25px;
+    height: 25px;
+    path {
+      fill: ${({ theme }) => theme.colors.green};
+    }
   }
 `;
 
@@ -58,7 +87,7 @@ export const StyledDropdown = styled(Dropdown)`
     ${mixins.textMixin({ $color: "darkBlue", $fontWeight: 500, $fontSize: "font-15" })};
     margin-right: 26px;
 
-    @media (max-width: ${({ theme }) => theme.device.mobileM}) {
+    @media (max-width: ${({ theme }) => theme.device.laptop}) {
       display: none;
     }
   }

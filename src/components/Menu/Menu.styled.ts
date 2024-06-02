@@ -11,7 +11,7 @@ export const StyledMenu = styled(Menu)`
     margin: 0;
     border-radius: 0;
     margin-inline: 0;
-    border-bottom: 2px solid #e1e5eb;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.menuBorder};
     height: 57px;
     border-left: 4px solid transparent;
     font-weight: 400;
@@ -19,12 +19,12 @@ export const StyledMenu = styled(Menu)`
   }
 
   li:first-child {
-    border-top: 2px solid #e1e5eb;
+    border-top: 2px solid ${({ theme }) => theme.colors.menuBorder};
   }
 
   .ant-menu-item-selected {
     border-left: 4px solid ${({ theme }) => theme.colors.blue};
-    background-color: #fbfbfb;
+    background-color: ${({ theme }) => theme.colors.menuItemBg};
     color: ${({ theme }) => theme.colors.blue};
   }
 `;

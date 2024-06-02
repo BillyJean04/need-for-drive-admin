@@ -1,7 +1,7 @@
-import { OrderTableDataType } from "@/pages/Orders/columns";
+import { Order } from "@/types";
 import { OrderApi } from "@/types/api";
 
-export function transformOrders(data?: OrderApi["data"]): OrderTableDataType[] {
+export function transformOrders(data?: OrderApi["data"]): Order[] {
   return (
     data?.map((order) => ({
       id: order.id,

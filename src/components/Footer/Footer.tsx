@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 
-import { StyledFooter } from "@/components/Footer/Footer.styled";
+import { StyledFooter } from "./Footer.styled";
 
 export function Footer() {
   return (

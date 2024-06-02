@@ -3,12 +3,35 @@ import styled from "styled-components";
 
 import mixins from "@/styles/mixins";
 
+export const StyledOrderItem = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+
+  border-bottom: 1px solid ${({ theme }) => theme.colors.menuBorder};
+`;
+
 export const StyledRadioButtonGroup = styled(Radio.Group)`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  flex: 1;
+
+  @media (max-width: ${({ theme }) => theme.device.mobileL}) {
+    flex-direction: column;
+    align-items: stretch;
+    flex: 0;
+  }
 
   label {
+    @media (max-width: ${({ theme }) => theme.device.mobileM}) {
+      // override default ant design styles
+
+      border-radius: 0 !important;
+    }
     span:last-child {
       display: flex;
       align-items: center;
@@ -55,22 +78,44 @@ export const StyledRadioButtonGroup = styled(Radio.Group)`
   }
 `;
 
-export const StyledPrice = styled.span`
+export const StyledPrice = styled.div`
   ${mixins.textMixin({ $fontSize: "font-24", $fontWeight: 500 })};
+
+  text-align: center;
+  flex: 1;
+  min-width: 9ch;
 `;
 
 export const StyledOrderInfo = styled.div`
   ${mixins.textMixin({ $color: "gray", $fontWeight: 500 })};
+  flex: 1.1;
+  min-width: min(15rem, 100%);
 
   span {
     color: ${({ theme }) => theme.colors.black};
   }
 `;
 
+export const StyledOrderItemImage = styled.img`
+  max-width: 138px;
+  height: 63px;
+  object-fit: contain;
+
+  flex: 1;
+`;
+
+export const StyledCheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+
+  flex: 1;
+`;
+
 export const StyledCheckboxContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 `;
 
 export const StyledCheckbox = styled(Checkbox)<{ $checked: boolean }>`

@@ -39,6 +39,25 @@ export interface Car {
   categoryId: Category;
 }
 
+export interface CarApi {
+  data: Car[];
+  count: number;
+}
+
+export interface CityApi {
+  data: City[];
+  count: number;
+}
+export interface OrderStatusApi {
+  data: {
+    id: number;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  count: number;
+}
+
 export interface Rate {
   id: number;
   price: string;
