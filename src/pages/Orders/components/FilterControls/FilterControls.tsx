@@ -1,7 +1,8 @@
 import { Button, Select } from "antd";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 
 import { useOrdersFilters } from "@/hooks";
+import { Filters } from "@/types";
 
 import {
   StyledFilterButtons,
@@ -10,22 +11,18 @@ import {
 } from "./FilterControls.styled";
 
 export interface FilterControlsProps {
-  filters: {
-    model?: number;
-    city?: number;
-    status?: number;
-  };
-  setFilters: Dispatch<SetStateAction<{ model?: number; city?: number; status?: number }>>;
-  setIsFilterApplied: Dispatch<SetStateAction<boolean>>;
+  setFilters: Dispatch<SetStateAction<Filters>>;
 }
 
-export function FilterControls({ filters, setFilters, setIsFilterApplied }: FilterControlsProps) {
+export function FilterControls({ setFilters }: FilterControlsProps) {
+  const [selectedValues, setSelectedValues] = useState<Filters>({});
+
   const isSomeFilterSelected = useMemo(
-    () => !!filters.model || !!filters.city || !!filters.status,
-    [filters.city, filters.status, filters.model],
+    () => Object.values(selectedValues).some((item) => !!item),
+    [selectedValues],
   );
 
-  const { models, cities, status } = useOrdersFilters();
+  const { models, cities, status: statusOptions } = useOrdersFilters();
 
   return (
     <StyledTableFilterControls>
@@ -33,34 +30,39 @@ export function FilterControls({ filters, setFilters, setIsFilterApplied }: Filt
         <Select
           placeholder="Марка"
           optionFilterProp="children"
-          onChange={(value) => setFilters({ ...filters, model: value })}
+          onChange={(value) => setSelectedValues({ ...selectedValues, model: value })}
           options={models}
-          value={filters.model || null}
+          value={selectedValues.model || null}
         />
         <Select
           placeholder="Город"
           optionFilterProp="children"
-          onChange={(value) => setFilters({ ...filters, city: value })}
-          value={filters.city || null}
+          onChange={(value) => setSelectedValues({ ...selectedValues, city: value })}
+          value={selectedValues.city || null}
           options={cities}
         />
         <Select
           placeholder="Статус"
           optionFilterProp="children"
-          onChange={(value) => setFilters({ ...filters, status: value })}
-          value={filters.status || null}
-          options={status}
+          onChange={(value) => setSelectedValues({ ...selectedValues, status: value })}
+          value={selectedValues.status || null}
+          options={statusOptions}
         />
       </StyledSelectsContainer>
       <StyledFilterButtons>
-        <Button type="primary" onClick={() => setIsFilterApplied(true)}>
+        <Button
+          type="primary"
+          onClick={() => {
+            setFilters({ ...selectedValues });
+          }}
+        >
           Применить
         </Button>
         {isSomeFilterSelected && (
           <Button
             onClick={() => {
+              setSelectedValues({});
               setFilters({});
-              setIsFilterApplied(false);
             }}
             type="primary"
             danger

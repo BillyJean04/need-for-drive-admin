@@ -16,3 +16,9 @@ export interface Order {
   };
   price: number;
 }
+
+export interface Filters {
+  model?: number;
+  city?: number;
+  status?: number;
+}
