@@ -6,6 +6,9 @@ import { menuItems } from "./menuItems";
 export function Menu() {
   const location = useLocation();
   const selectedMenuItem = `/${location.pathname.split("/")[2]}`;
+  const isDashboard = location.pathname === "/dashboard";
 
-  return <StyledMenu selectedKeys={[selectedMenuItem]} items={menuItems} />;
+  return (
+    <StyledMenu selectedKeys={[isDashboard ? "/dashboard" : selectedMenuItem]} items={menuItems} />
+  );
 }

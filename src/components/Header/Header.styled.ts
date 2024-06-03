@@ -40,22 +40,52 @@ export const StyledInputContainer = styled.div`
   }
 `;
 
-export const StyledLogoIconContainer = styled.div`
+export const StyledBurgerContainer = styled.div`
+  z-index: 100;
+  padding-right: 25px;
   display: flex;
   align-items: center;
-  height: 100%;
   border-right: 1px solid ${({ theme }) => theme.colors.lightGray};
 
   @media (min-width: ${({ theme }) => theme.device.laptop}) {
     display: none;
   }
+`;
 
-  padding-right: 25px;
-  svg {
-    width: 25px;
-    height: 25px;
-    path {
-      fill: ${({ theme }) => theme.colors.green};
+export const StyledBurger = styled.button<{ $isOpen: boolean }>`
+  top: 5%;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 11;
+
+  span {
+    width: 2.1rem;
+    height: 0.25rem;
+    background: ${({ theme }) => theme.colors.black};
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+
+    &:first-child {
+      transform: ${({ $isOpen }) => ($isOpen ? "rotate(45deg)" : "rotate(0)")};
+    }
+
+    &:nth-child(2) {
+      opacity: ${({ $isOpen }) => ($isOpen ? "0" : "1")};
+      transform: ${({ $isOpen }) => ($isOpen ? "translateX(20px)" : "translateX(0)")};
+    }
+
+    &:nth-child(3) {
+      transform: ${({ $isOpen }) => ($isOpen ? "rotate(-45deg)" : "rotate(0)")};
     }
   }
 `;

@@ -10,7 +10,7 @@ import {
 export function OrderItemSkeleton() {
   return (
     <StyledOrderItemSkeleton>
-      <Skeleton.Avatar style={{ width: "138px", height: "63px" }} shape="square" />
+      <Skeleton.Avatar style={{ width: "160px", height: "90px" }} shape="square" />
       <StyledOrderInfoSkeleton>
         <Skeleton title={false} paragraph={{ rows: 3 }} />
       </StyledOrderInfoSkeleton>
