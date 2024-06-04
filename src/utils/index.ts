@@ -25,3 +25,11 @@ export const removeCookies = () => {
   Cookies.remove("basic");
   Cookies.remove("refresh");
 };
+
+export function formatNumber(number: number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+export function createRenderArray(length: number) {
+  return new Array(length).fill(1).map((_, i) => i + 1);
+}

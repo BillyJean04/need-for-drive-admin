@@ -5,17 +5,21 @@ export interface Options {
   headers: Headers;
   body?: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
+  params?: string;
 }
 
 export async function fetcher<T>(options: Options): Promise<T> {
-  return fetch(`${baseUrl}${options.endpoint}`, {
-    headers: options.headers,
-    body: options.body,
-    method: options.method,
+  const { params, headers, body, method, endpoint } = options;
+
+  return fetch(`${baseUrl}${endpoint}${params ? `?${params}` : ""}`, {
+    headers,
+    body,
+    method,
   }).then((res) => {
     if (res.status === 401) {
       throw new Error("Unauthorized");
     }
+
     return res.json();
   });
 }
