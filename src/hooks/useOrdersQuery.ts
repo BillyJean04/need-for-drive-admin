@@ -3,14 +3,17 @@ import Cookies from "js-cookie";
 import qs from "qs";
 import { useMemo, useState } from "react";
 
-import { Filters } from "@/types";
 import { OrderApi } from "@/types/api";
 import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
 import { transformOrders } from "@/utils/transformOrders";
 
-export function useOrdersQuery({ filters }: { filters: Filters }) {
+export function useOrdersQuery({
+  filters,
+}: {
+  filters: { city?: number; model?: number; status?: number };
+}) {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
 

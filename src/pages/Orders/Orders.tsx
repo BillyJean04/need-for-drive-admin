@@ -1,12 +1,13 @@
 import { Card, Empty, Pagination, Typography } from "antd";
+import { isEmpty } from "lodash";
 import { useState } from "react";
 
-import { useOrdersQuery } from "@/hooks";
-import { Filters } from "@/types";
+import { FilterControls } from "@/components";
+import { useOrdersFilters, useOrdersQuery } from "@/hooks";
 import { createRenderArray } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";
 
-import { FilterControls, OrderItem, OrderItemSkeleton } from "./components";
+import { OrderItem, OrderItemSkeleton } from "./components";
 import {
   StyledEmptyData,
   StyledOrdersContainer,
@@ -15,17 +16,24 @@ import {
 
 export function Orders() {
   const [totalPages, setTotalPages] = useState(0);
-  const [filters, setFilters] = useState<Filters>({});
+  const [filters, setFilters] = useState<{ city?: number; model?: number; status?: number }>({});
 
   const { orders, setPage, setLimit, limit, total, isLoading } = useOrdersQuery({
     filters,
   });
 
+  const { models, cities, orderStatus } = useOrdersFilters();
+
+  const isFiltersLoading = !isEmpty(models) && !isEmpty(cities) && !isEmpty(orderStatus);
+
   return (
     <StyledOrdersContainer>
       <Typography.Title level={2}>Заказы</Typography.Title>
       <Card>
-        <FilterControls setFilters={setFilters} />
+        <FilterControls
+          setFilters={setFilters}
+          options={isFiltersLoading ? [models, cities, orderStatus] : []}
+        />
         <StyledOrdersItemsContainer>
           {isLoading && createRenderArray(limit).map((item) => <OrderItemSkeleton key={item} />)}
           {orders?.map((order) => <OrderItem key={order.id} order={order} />)}

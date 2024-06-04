@@ -17,8 +17,15 @@ export interface Order {
   price: number;
 }
 
-export interface Filters {
-  model?: number;
-  city?: number;
-  status?: number;
+export interface FilterItems {
+  [key: string]: number;
+}
+
+export interface FilterOptions {
+  name: string;
+  placeholder: string;
+  items: {
+    value: number;
+    label: string;
+  }[];
 }
