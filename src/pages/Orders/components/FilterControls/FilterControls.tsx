@@ -1,5 +1,6 @@
 import { Button, Select } from "antd";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { isEmpty } from "lodash";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { useOrdersFilters } from "@/hooks";
 import { Filters } from "@/types";
@@ -16,11 +17,6 @@ export interface FilterControlsProps {
 
 export function FilterControls({ setFilters }: FilterControlsProps) {
   const [selectedValues, setSelectedValues] = useState<Filters>({});
-
-  const isSomeFilterSelected = useMemo(
-    () => Object.values(selectedValues).some((item) => !!item),
-    [selectedValues],
-  );
 
   const { models, cities, status: statusOptions } = useOrdersFilters();
 
@@ -53,12 +49,12 @@ export function FilterControls({ setFilters }: FilterControlsProps) {
         <Button
           type="primary"
           onClick={() => {
-            setFilters({ ...selectedValues });
+            setFilters(selectedValues);
           }}
         >
           Применить
         </Button>
-        {isSomeFilterSelected && (
+        {!isEmpty(selectedValues) && (
           <Button
             onClick={() => {
               setSelectedValues({});
