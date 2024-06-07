@@ -1,9 +1,10 @@
-import { Card, Empty, Pagination, Typography } from "antd";
+import { Card, Empty, Typography } from "antd";
 import { isEmpty } from "lodash";
 import { useState } from "react";
 
 import { FilterControls } from "@/components";
 import { useOrdersFilters, useOrdersQuery } from "@/hooks";
+import { StyledPagination } from "@/styles/global.styled";
 import { createRenderArray } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";
 
@@ -43,7 +44,7 @@ export function Orders() {
             <Empty description="Нет данных" />
           </StyledEmptyData>
         )}
-        <Pagination
+        <StyledPagination
           showLessItems
           itemRender={itemRender}
           defaultPageSize={5}

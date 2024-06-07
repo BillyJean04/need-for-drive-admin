@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { MainLayout } from "@/layouts";
-import { Order, Orders, SignIn, SignUp } from "@/pages";
+import { Cars, Order, Orders, SignIn, SignUp } from "@/pages";
 import { routesPaths } from "@/utils/consts/routes";
 
-const { signIn, signUp, dashboard, orders, order } = routesPaths;
+const { signIn, signUp, dashboard, orders, order, cars } = routesPaths;
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +21,7 @@ export const router = createBrowserRouter([
     children: [
       { path: orders, element: <Orders /> },
       { path: order, element: <Order /> },
+      { path: cars, element: <Cars /> },
     ],
   },
 ]);

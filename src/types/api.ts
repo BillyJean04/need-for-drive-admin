@@ -44,6 +44,11 @@ export interface CarApi {
   count: number;
 }
 
+export interface CategoryApi {
+  data: Category[];
+  count: number;
+}
+
 export interface CityApi {
   data: City[];
   count: number;

@@ -6,4 +6,5 @@ export const routesPaths = {
   dashboard: `${basePath}dashboard`,
   orders: `${basePath}dashboard/orders`,
   order: `${basePath}dashboard/orders/:id`,
+  cars: `${basePath}dashboard/cars`,
 };

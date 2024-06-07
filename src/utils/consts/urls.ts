@@ -9,4 +9,5 @@ export enum Urls {
   cars = "/db/car",
   cities = "/db/city",
   orderStatus = "/db/orderStatus",
+  categories = "/db/category",
 }

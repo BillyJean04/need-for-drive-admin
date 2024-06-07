@@ -17,6 +17,22 @@ export interface Order {
   price: number;
 }
 
+export interface Car {
+  id: number;
+  priceMax: number;
+  priceMin: number;
+  name: string;
+  image: string;
+  description: string;
+  number: string;
+  tank: string;
+  colors: string[];
+  category: {
+    id: number;
+    name: string;
+  };
+}
+
 export interface FilterItems {
   [key: string]: number;
 }

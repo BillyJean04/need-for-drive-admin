@@ -33,3 +33,19 @@ export function formatNumber(number: number) {
 export function createRenderArray(length: number) {
   return new Array(length).fill(1).map((_, i) => i + 1);
 }
+
+export function calculatePageData<T>({
+  data,
+  page,
+  pageLimit,
+}: {
+  data: T[];
+  page: number;
+  pageLimit: number;
+}): T[] {
+  if (data.length > pageLimit) {
+    return data?.slice((page - 1) * pageLimit, page * pageLimit);
+  }
+
+  return data;
+}
