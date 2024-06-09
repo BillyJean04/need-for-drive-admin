@@ -86,6 +86,12 @@ export interface Point {
   cityId: City;
 }
 
+export interface PointApi {
+  data: Point[];
+
+  count: number;
+}
+
 export interface OrderApi {
   data: {
     id: number;

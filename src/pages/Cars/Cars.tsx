@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 import { useState } from "react";
 
 import { FilterControls } from "@/components";
-import { useCarsFilter } from "@/hooks/useCarsFilter";
+import { useCarsFilter } from "@/hooks";
 import { StyledEmptyData } from "@/pages/Orders/Orders.styled";
 import { StyledPagination } from "@/styles/global.styled";
 import { Car } from "@/types";
@@ -46,7 +46,12 @@ export function Cars() {
     <StyledCarsContainer>
       <Typography.Title level={2}>Автомобили</Typography.Title>
       <Card>
-        <FilterControls setFilters={setFilters} options={categories ? [categories] : []} />
+        <FilterControls
+          setPage={setPage}
+          setFilters={setFilters}
+          options={categories ? [categories] : []}
+          isClient
+        />
         <StyledCarsCardContainer>
           {isLoading && createRenderArray(pageLimit).map((item) => <CarItemSkeleton key={item} />)}
           {carsPerPage?.map((car) => <CarItem key={car.id} car={car} />)}
@@ -62,6 +67,7 @@ export function Cars() {
           defaultPageSize={5}
           responsive
           hideOnSinglePage
+          current={page}
           total={filteredCars.length}
           onChange={(currentPage, pageSize) => {
             setPage(currentPage);

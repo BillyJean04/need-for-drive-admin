@@ -41,6 +41,7 @@ export function useOrdersQuery({
     orders: transformedOrders,
     isLoading,
     setPage,
+    page,
     setLimit,
     total: orders?.count,
     limit,

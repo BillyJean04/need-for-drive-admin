@@ -32,6 +32,7 @@ export function Orders() {
       <Typography.Title level={2}>Заказы</Typography.Title>
       <Card>
         <FilterControls
+          setPage={setPage}
           setFilters={setFilters}
           options={isFiltersLoading ? [models, cities, orderStatus] : []}
         />
@@ -51,8 +52,8 @@ export function Orders() {
           responsive
           hideOnSinglePage
           total={total ?? totalPages}
-          onChange={(page, pageSize) => {
-            setPage(page - 1);
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage - 1);
             setLimit(pageSize);
             setTotalPages((prev) => total ?? prev);
           }}

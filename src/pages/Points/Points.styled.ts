@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import mixins from "@/styles/mixins";
 
-export const StyledCarsContainer = styled.div`
+export const StyledPointsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 24px 27px;
@@ -16,7 +16,9 @@ export const StyledCarsContainer = styled.div`
   }
 `;
 
-export const StyledCarsCardContainer = styled.div`
+export const StyledAddButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  padding-bottom: 10px;
 `;

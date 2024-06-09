@@ -33,6 +33,13 @@ export interface Car {
   };
 }
 
+export interface Point {
+  id: number;
+  name: string;
+  address: string;
+  city: string;
+}
+
 export interface FilterItems {
   [key: string]: number;
 }

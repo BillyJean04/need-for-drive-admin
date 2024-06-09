@@ -9,8 +9,8 @@ export const StyledLayoutContent = styled(Layout.Content)<{ $isDashboard: boolea
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 24px 0 0;
   overflow-y: auto;
+  position: relative;
 
   justify-content: ${({ $isDashboard }) => ($isDashboard ? "flex-end" : "space-between")};
 `;

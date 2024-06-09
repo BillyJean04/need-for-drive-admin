@@ -5,7 +5,7 @@ import mixins from "@/styles/mixins";
 export const StyledOrdersContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 27px;
+  padding: 24px 27px;
 
   @media (max-width: ${({ theme }) => theme.device.mobileM}) {
     padding: 0 10px;
