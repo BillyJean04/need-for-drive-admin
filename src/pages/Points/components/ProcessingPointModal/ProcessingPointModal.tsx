@@ -34,32 +34,43 @@ export function ProcessingPointModal({
 
   const cityId = cities?.items.find(({ label }) => label === initialValues.city)?.value;
 
+  const handleClickOpen = () => {
+    setOpen(true);
+    form.setFieldsValue({
+      ...initialValues,
+      city: cityId,
+    });
+  };
+
+  const handleClickOk = () => {
+    form
+      .validateFields()
+      .then(() =>
+        action({
+          ...form.getFieldsValue(),
+          id: initialValues.id,
+          city: form.getFieldValue("city"),
+        }).finally(() => setOpen(false)),
+      )
+      .catch(() => {});
+  };
+
+  const handleSelect = () => {
+    form.setFieldValue("name", "");
+    form.setFieldValue("address", "");
+  };
+
   return (
     <>
-      <Button
-        onClick={() => {
-          setOpen(true);
-          form.setFieldsValue({
-            ...initialValues,
-            city: cityId,
-          });
-        }}
-      >
-        {openButtonText}
-      </Button>
+      <Button onClick={handleClickOpen}>{openButtonText}</Button>
       <Modal
         title={title}
         open={open}
         onCancel={() => setOpen(false)}
-        onOk={() =>
-          action({
-            ...form.getFieldsValue(),
-            id: initialValues.id,
-            city: cityId ?? form.getFieldValue("city"),
-          }).finally(() => setOpen(false))
-        }
+        onOk={handleClickOk}
         confirmLoading={isLoading}
         okText={okButtonText}
+        okButtonProps={{}}
         cancelText={cancelButtonText}
         destroyOnClose
       >
@@ -70,13 +81,7 @@ export function ProcessingPointModal({
             rules={[{ required: true, message: "Пожалуйста, выберите город!" }]}
             initialValue={initialValues.city}
           >
-            <Select
-              onSelect={() => {
-                form.setFieldValue("name", "");
-                form.setFieldValue("address", "");
-              }}
-              placeholder="Выберите город"
-            >
+            <Select onSelect={handleSelect} placeholder="Выберите город">
               {cities?.items.map(({ value, label }) => (
                 <Select.Option key={value} value={value}>
                   {label}
