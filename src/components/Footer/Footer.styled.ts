@@ -10,6 +10,7 @@ export const StyledFooter = styled(Layout.Footer)`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 5px;
+  margin-top: auto;
 
   span {
     ${mixins.textMixin({ $fontWeight: 500, $color: "lightBlue" })};

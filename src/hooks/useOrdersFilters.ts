@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
+import { FilterOptions } from "@/types";
 import { CarApi, CityApi } from "@/types/api";
 import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
@@ -14,11 +15,16 @@ export function useOrdersFilters() {
         endpoint: Urls.cars,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
-      }).then((res) =>
-        res.data.map(({ id, name }) => ({
-          value: id,
-          label: name,
-        })),
+      }).then(
+        (res) =>
+          ({
+            name: "model",
+            placeholder: "Модели",
+            items: res.data.map(({ id, name }) => ({
+              value: id,
+              label: name,
+            })),
+          }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
   });
@@ -30,14 +36,20 @@ export function useOrdersFilters() {
         endpoint: Urls.cities,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
-      }).then((res) =>
-        res.data.map(({ id, name }) => ({
-          value: id,
-          label: name,
-        })),
+      }).then(
+        (res) =>
+          ({
+            name: "city",
+            placeholder: "Гороода",
+            items: res.data.map(({ id, name }) => ({
+              value: id,
+              label: name,
+            })),
+          }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
   });
+
   const { data: orderStatus } = useQuery({
     queryKey: ["orderStatus"],
     queryFn: () =>
@@ -45,14 +57,19 @@ export function useOrdersFilters() {
         endpoint: Urls.orderStatus,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
-      }).then((res) =>
-        res.data.map(({ id, name }) => ({
-          value: id,
-          label: name,
-        })),
+      }).then(
+        (res) =>
+          ({
+            name: "status",
+            placeholder: "Статус",
+            items: res.data.map(({ id, name }) => ({
+              value: id,
+              label: name,
+            })),
+          }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
   });
 
-  return { models, cities, status: orderStatus };
+  return models && cities && orderStatus ? [models, cities, orderStatus] : [];
 }

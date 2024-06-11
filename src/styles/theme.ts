@@ -52,5 +52,8 @@ export const themeConfig: ThemeConfig = {
       defaultShadow: "",
       primaryShadow: "",
     },
+    Alert: {
+      defaultPadding: 15,
+    },
   },
 };

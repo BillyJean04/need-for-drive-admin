@@ -44,6 +44,11 @@ export interface CarApi {
   count: number;
 }
 
+export interface CategoryApi {
+  data: Category[];
+  count: number;
+}
+
 export interface CityApi {
   data: City[];
   count: number;
@@ -79,6 +84,12 @@ export interface Point {
   createdAt: Date;
   updatedAt: Date;
   cityId: City;
+}
+
+export interface PointApi {
+  data: Point[];
+
+  count: number;
 }
 
 export interface OrderApi {

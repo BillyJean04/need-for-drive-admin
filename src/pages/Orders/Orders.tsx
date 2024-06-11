@@ -1,12 +1,13 @@
-import { Card, Empty, Pagination, Typography } from "antd";
+import { Card, Empty, Typography } from "antd";
 import { useState } from "react";
 
-import { useOrdersQuery } from "@/hooks";
-import { Filters } from "@/types";
+import { FilterControls } from "@/components";
+import { useOrdersFilters, useOrdersQuery } from "@/hooks";
+import { StyledPagination } from "@/styles/global.styled";
 import { createRenderArray } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";
 
-import { FilterControls, OrderItem, OrderItemSkeleton } from "./components";
+import { OrderItem, OrderItemSkeleton } from "./components";
 import {
   StyledEmptyData,
   StyledOrdersContainer,
@@ -15,17 +16,19 @@ import {
 
 export function Orders() {
   const [totalPages, setTotalPages] = useState(0);
-  const [filters, setFilters] = useState<Filters>({});
+  const [filters, setFilters] = useState<{ city?: number; model?: number; status?: number }>({});
 
   const { orders, setPage, setLimit, limit, total, isLoading } = useOrdersQuery({
     filters,
   });
 
+  const options = useOrdersFilters();
+
   return (
     <StyledOrdersContainer>
       <Typography.Title level={2}>Заказы</Typography.Title>
       <Card>
-        <FilterControls setFilters={setFilters} />
+        <FilterControls setPage={setPage} setFilters={setFilters} options={options} />
         <StyledOrdersItemsContainer>
           {isLoading && createRenderArray(limit).map((item) => <OrderItemSkeleton key={item} />)}
           {orders?.map((order) => <OrderItem key={order.id} order={order} />)}
@@ -35,15 +38,15 @@ export function Orders() {
             <Empty description="Нет данных" />
           </StyledEmptyData>
         )}
-        <Pagination
+        <StyledPagination
           showLessItems
           itemRender={itemRender}
           defaultPageSize={5}
           responsive
           hideOnSinglePage
           total={total ?? totalPages}
-          onChange={(page, pageSize) => {
-            setPage(page - 1);
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage - 1);
             setLimit(pageSize);
             setTotalPages((prev) => total ?? prev);
           }}

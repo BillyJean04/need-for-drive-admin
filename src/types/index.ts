@@ -17,8 +17,45 @@ export interface Order {
   price: number;
 }
 
-export interface Filters {
-  model?: number;
-  city?: number;
-  status?: number;
+export interface Car {
+  id: number;
+  priceMax: number;
+  priceMin: number;
+  name: string;
+  image: string;
+  description: string;
+  number: string;
+  tank: string;
+  colors: string[];
+  category: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface Point {
+  id: number;
+  name: string;
+  address: string;
+  city: string;
+}
+
+export interface FilterItems {
+  [key: string]: number;
+}
+
+export interface FilterOptions {
+  name: string;
+  placeholder: string;
+  items: {
+    value: number;
+    label: string;
+  }[];
+}
+
+export interface PointField {
+  id: number;
+  name: string;
+  address: string;
+  city: number;
 }
