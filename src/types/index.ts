@@ -52,3 +52,10 @@ export interface FilterOptions {
     label: string;
   }[];
 }
+
+export interface PointField {
+  id: number;
+  name: string;
+  address: string;
+  city: number;
+}

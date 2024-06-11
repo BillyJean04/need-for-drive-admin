@@ -46,12 +46,7 @@ export function Cars() {
     <StyledCarsContainer>
       <Typography.Title level={2}>Автомобили</Typography.Title>
       <Card>
-        <FilterControls
-          setPage={setPage}
-          setFilters={setFilters}
-          options={categories ? [categories] : []}
-          isClient
-        />
+        <FilterControls setPage={setPage} setFilters={setFilters} options={categories} isClient />
         <StyledCarsCardContainer>
           {isLoading && createRenderArray(pageLimit).map((item) => <CarItemSkeleton key={item} />)}
           {carsPerPage?.map((car) => <CarItem key={car.id} car={car} />)}

@@ -28,7 +28,10 @@ export function CarItem({
         <p>{description}</p>
       </StyledCarItemDescription>
       <StyledCarItemColors>
-        <span>Цвета:</span> {colors.join(", ")}
+        <span>Цвета: </span>
+        {colors.map((color, index) => (
+          <span>{index < colors.length - 1 ? `${color}, ` : color}</span>
+        ))}
       </StyledCarItemColors>
       <StyledCarItemPrices>
         <span>Цена:</span>

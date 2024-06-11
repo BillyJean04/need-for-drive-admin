@@ -34,7 +34,7 @@ export function useCarsFilter({ cars, filters }: { cars: Car[]; filters: { categ
   );
 
   return {
-    categories,
+    categories: categories ? [categories] : [],
     filteredCars: !isEmpty(filters) ? filteredCars : cars,
   };
 }

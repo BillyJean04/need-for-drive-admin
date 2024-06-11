@@ -1,5 +1,4 @@
 import { Card, Empty, Typography } from "antd";
-import { isEmpty } from "lodash";
 import { useState } from "react";
 
 import { FilterControls } from "@/components";
@@ -23,19 +22,13 @@ export function Orders() {
     filters,
   });
 
-  const { models, cities, orderStatus } = useOrdersFilters();
-
-  const isFiltersLoading = !isEmpty(models) && !isEmpty(cities) && !isEmpty(orderStatus);
+  const options = useOrdersFilters();
 
   return (
     <StyledOrdersContainer>
       <Typography.Title level={2}>Заказы</Typography.Title>
       <Card>
-        <FilterControls
-          setPage={setPage}
-          setFilters={setFilters}
-          options={isFiltersLoading ? [models, cities, orderStatus] : []}
-        />
+        <FilterControls setPage={setPage} setFilters={setFilters} options={options} />
         <StyledOrdersItemsContainer>
           {isLoading && createRenderArray(limit).map((item) => <OrderItemSkeleton key={item} />)}
           {orders?.map((order) => <OrderItem key={order.id} order={order} />)}

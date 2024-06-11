@@ -38,8 +38,12 @@ export const StyledCarItemDescription = styled.div`
 export const StyledCarItemColors = styled.div`
   flex: 1;
 
-  span {
+  span:first-child {
     ${mixins.textMixin({ $color: "black" })};
+  }
+
+  span {
+    ${mixins.textMixin({ $color: "gray" })};
   }
 `;
 

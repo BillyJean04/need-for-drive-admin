@@ -71,9 +71,5 @@ export function useOrdersFilters() {
     refetchOnWindowFocus: false,
   });
 
-  return {
-    models,
-    cities,
-    orderStatus,
-  };
+  return models && cities && orderStatus ? [models, cities, orderStatus] : [];
 }

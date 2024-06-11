@@ -1,27 +1,27 @@
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
+
+interface AlertOptions {
+  message?: string;
+  type?: "info" | "error" | "warning" | "success";
+}
 
 interface AlertContext {
-  message: string;
-  setMessage: (message: string) => void;
-  type?: "success" | "error" | "info" | "warning";
-  setType: (type: "success" | "error" | "info" | "warning") => void;
+  alertOptions: AlertOptions;
+  setAlertOptions: Dispatch<SetStateAction<AlertOptions>>;
   isAlertShowing: boolean;
-  setIsAlertShowing: (value: boolean) => void;
+  setIsAlertShowing: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AlertContext = createContext<AlertContext>({
-  message: "",
-  setMessage: () => {},
-  type: "success",
-  setType: () => {},
+  alertOptions: {},
+  setAlertOptions: () => {},
   isAlertShowing: false,
   setIsAlertShowing: () => {},
 });
 
 export function AlertProvider({ children }: { children: ReactNode }) {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState<"success" | "error" | "info" | "warning" | undefined>("success");
+  const [alertOptions, setAlertOptions] = useState<AlertOptions>({});
 
   if (isAlertShowing) {
     setTimeout(() => {
@@ -31,14 +31,12 @@ export function AlertProvider({ children }: { children: ReactNode }) {
 
   const contextValues = useMemo(
     () => ({
-      message,
-      setMessage,
-      type,
-      setType,
+      alertOptions,
+      setAlertOptions,
       isAlertShowing,
       setIsAlertShowing,
     }),
-    [isAlertShowing, message, type],
+    [alertOptions, isAlertShowing],
   );
 
   return <AlertContext.Provider value={contextValues}>{children}</AlertContext.Provider>;

@@ -1,9 +1,7 @@
 import { Skeleton } from "antd";
 import { ColumnsType } from "antd/es/table";
 
-import { PointsTableDataType } from "@/pages/Points/types";
-
-export const columns: ColumnsType<PointsTableDataType> = [
+export const columns: ColumnsType = [
   {
     title: "Название",
     dataIndex: "name",

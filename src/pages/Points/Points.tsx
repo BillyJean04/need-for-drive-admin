@@ -1,50 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
-import { Alert, Card, Table, Typography } from "antd";
-import Cookies from "js-cookie";
+import { Alert, Card, Typography } from "antd";
 import { Key, useContext, useState } from "react";
 
 import { FilterControls } from "@/components";
-import { usePointsQuery } from "@/hooks";
-import { columns } from "@/pages/Points/columns";
+import { useCreatePoint, usePointsQuery } from "@/hooks";
+import { useCitiesQuery } from "@/hooks/useCitiesQuery";
 import { AlertContext } from "@/providers/AlertProvider";
 import { StyledPagination } from "@/styles/global.styled";
-import { FilterOptions, Point } from "@/types";
-import { CityApi } from "@/types/api";
-import { calculatePageData, getHeaders } from "@/utils";
-import { Urls } from "@/utils/consts/urls";
-import { fetcher } from "@/utils/fetcher";
+import { Point } from "@/types";
+import { calculatePageData } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";
 
-import { CreatePointModal, DeletePoint, PointsTableSkeleton } from "./components";
+import { DeletePoint, PointsTable, PointsTableSkeleton, ProcessingPointModal } from "./components";
 import { StyledPointsContainer } from "./Points.styled";
 
 export function Points() {
   const [totalPages, setTotalPages] = useState(0);
   const [filters, setFilters] = useState<{ cityId?: number }>({});
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+  const cities = useCitiesQuery();
 
-  const { isAlertShowing, setIsAlertShowing, type, message } = useContext(AlertContext);
+  const {
+    isAlertShowing,
+    setIsAlertShowing,
+    alertOptions: { message, type },
+  } = useContext(AlertContext);
 
-  const { data: cities } = useQuery({
-    queryKey: ["cities"],
-    queryFn: () =>
-      fetcher<CityApi>({
-        endpoint: Urls.cities,
-        headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
-        method: "GET",
-      }).then(
-        (res) =>
-          ({
-            name: "cityId",
-            placeholder: "Гороода",
-            items: res.data.map(({ id, name }) => ({
-              value: id,
-              label: name,
-            })),
-          }) satisfies FilterOptions,
-      ),
-    refetchOnWindowFocus: false,
-  });
+  const { createPoint, confirmLoading } = useCreatePoint();
 
   const { points, count, isLoading, page, limit, setPage, setLimit } = usePointsQuery({
     filters,
@@ -73,7 +54,20 @@ export function Points() {
             setFilters={setFilters}
             options={cities ? [cities] : []}
           >
-            <CreatePointModal cities={cities?.items} />
+            <ProcessingPointModal
+              initialValues={{
+                id: 0,
+                name: "",
+                city: "",
+                address: "",
+              }}
+              isLoading={confirmLoading}
+              action={createPoint}
+              title="Добавление пункта выдачи"
+              cancelButtonText="Отменить"
+              okButtonText="Добавить"
+              openButtonText="Добавить пункт выдачи"
+            />
             {hasSelected && (
               <DeletePoint selectedRows={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys} />
             )}
@@ -81,13 +75,12 @@ export function Points() {
           {isLoading ? (
             <PointsTableSkeleton limit={limit} />
           ) : (
-            <Table
-              rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
-              rowKey={(record) => record.id}
-              showSorterTooltip={false}
-              columns={columns}
-              dataSource={pointsPerPage}
+            <PointsTable
               pagination={false}
+              rowKey={(record) => record.id}
+              rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
+              showSorterTooltip={false}
+              dataSource={pointsPerPage}
             />
           )}
           <StyledPagination
