@@ -30,7 +30,7 @@ export function CarItem({
       <StyledCarItemColors>
         <span>Цвета: </span>
         {colors.map((color, index) => (
-          <span>{index < colors.length - 1 ? `${color}, ` : color}</span>
+          <span key={color}>{index < colors.length - 1 ? `${color}, ` : color}</span>
         ))}
       </StyledCarItemColors>
       <StyledCarItemPrices>

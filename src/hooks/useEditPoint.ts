@@ -26,6 +26,7 @@ export function useEditPoint() {
         headers: new Headers(getHeaders()),
       }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["points"] }),
+    throwOnError: true,
   });
 
   const editPoint = async (fieldsValue: PointField) => {

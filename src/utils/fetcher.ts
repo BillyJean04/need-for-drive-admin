@@ -11,15 +11,19 @@ export interface Options {
 export async function fetcher<T>(options: Options): Promise<T> {
   const { params, headers, body, method, endpoint } = options;
 
-  return fetch(`${baseUrl}${endpoint}${params ? `?${params}` : ""}`, {
+  const response = await fetch(`${baseUrl}${endpoint}${params ? `?${params}` : ""}`, {
     headers,
     body,
     method,
-  }).then((res) => {
-    if (res.status === 401) {
-      throw new Error("Unauthorized");
-    }
-
-    return res.json();
   });
+  const isContentTypeJson = response.headers.get("content-type")?.includes("application/json");
+
+  const responseData = isContentTypeJson
+    ? await response.json()
+    : { status: response.status, statusText: response.statusText };
+
+  if (!response.ok) {
+    return Promise.reject(responseData);
+  }
+  return Promise.resolve(responseData);
 }

@@ -23,6 +23,7 @@ export function useCreatePoint() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["points"] });
     },
+    throwOnError: true,
   });
 
   const createPoint = async (fieldsValue: PointField) => {

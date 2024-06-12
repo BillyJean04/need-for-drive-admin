@@ -26,6 +26,7 @@ export function useCarsFilter({ cars, filters }: { cars: Car[]; filters: { categ
         })),
       })),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   const filteredCars = useMemo(

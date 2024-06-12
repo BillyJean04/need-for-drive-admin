@@ -69,6 +69,7 @@ export function useOrdersFilters() {
           }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   return models && cities && orderStatus ? [models, cities, orderStatus] : [];

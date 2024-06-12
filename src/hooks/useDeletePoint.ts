@@ -34,6 +34,7 @@ export function useDeletePoint({
         type: "success",
       });
     },
+    throwOnError: true,
   });
 
   const deletePoint = async () => {

@@ -33,6 +33,7 @@ export function useOrdersQuery({
         }),
       }).then((res) => res),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   const transformedOrders = useMemo(() => transformOrders(orders?.data), [orders?.data]);

@@ -12,6 +12,8 @@ export const theme = {
     "font-30": "30px",
     "font-32": "32px",
     "font-40": "40px",
+    "font-50": "50px",
+    "font-70": "70px",
   },
 
   colors: {

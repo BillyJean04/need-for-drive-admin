@@ -7,7 +7,14 @@ import AuthProvider from "@/providers/AuthProvider";
 import { router } from "@/routes";
 import { theme, themeConfig } from "@/styles/theme";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      throwOnError: true,
+    },
+  },
+});
 
 export default function App() {
   return (
