@@ -1,3 +1,4 @@
+export * from "./Car";
 export * from "./Cars";
 export * from "./Error";
 export * from "./Orders";

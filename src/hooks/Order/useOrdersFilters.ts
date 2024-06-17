@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 import { FilterOptions } from "@/types";
-import { CarApi, CityApi } from "@/types/api";
+import { CarsApi, CityApi } from "@/types/api";
 import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
@@ -11,7 +11,7 @@ export function useOrdersFilters() {
   const { data: models } = useQuery({
     queryKey: ["models"],
     queryFn: () =>
-      fetcher<CarApi>({
+      fetcher<CarsApi>({
         endpoint: Urls.cars,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
@@ -27,6 +27,7 @@ export function useOrdersFilters() {
           }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   const { data: cities } = useQuery({
@@ -48,6 +49,7 @@ export function useOrdersFilters() {
           }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   const { data: orderStatus } = useQuery({

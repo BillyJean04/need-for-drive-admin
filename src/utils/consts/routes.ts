@@ -6,7 +6,8 @@ export const routesPaths = {
   signUp: `${basePath}signup`,
   dashboard: `${basePath}dashboard`,
   orders: `${basePath}dashboard/orders`,
-  order: `${basePath}dashboard/orders/:id`,
   cars: `${basePath}dashboard/cars`,
+  car: `${basePath}dashboard/car`,
+  carId: `${basePath}dashboard/car/:carId`,
   points: `${basePath}dashboard/points`,
 };

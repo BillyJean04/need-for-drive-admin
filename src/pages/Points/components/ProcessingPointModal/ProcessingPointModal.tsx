@@ -1,7 +1,7 @@
 import { Button, Form, Input, Modal, Select } from "antd";
 import { useState } from "react";
 
-import { useCitiesQuery } from "@/hooks/useCitiesQuery";
+import { useCitiesQuery } from "@/hooks";
 import { PointField } from "@/types";
 
 interface ProcessingPointModalProps {

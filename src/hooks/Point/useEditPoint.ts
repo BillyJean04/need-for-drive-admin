@@ -25,8 +25,8 @@ export function useEditPoint() {
         body: JSON.stringify(updatedPoint),
         headers: new Headers(getHeaders()),
       }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["points"] }),
     throwOnError: true,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["points"] }),
   });
 
   const editPoint = async (fieldsValue: PointField) => {

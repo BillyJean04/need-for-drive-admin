@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 import { Car } from "@/types";
 import { formatNumber } from "@/utils";
@@ -18,7 +19,7 @@ interface CarItemProps {
 }
 
 export function CarItem({
-  car: { image, name, description, colors, priceMin, priceMax, number, tank },
+  car: { image, name, description, colors, priceMin, priceMax, number, tank, id },
 }: CarItemProps) {
   return (
     <StyledCarItemContainer>
@@ -47,10 +48,9 @@ export function CarItem({
         <span>Уроовень топлива:</span> {tank}
       </StyledCarItemAdditionalInfo>
       <StyledCarItemButtons>
-        <Button type="primary">Изменить</Button>
-        <Button type="primary" danger>
-          Удалить
-        </Button>
+        <Link to={`/dashboard/car/${id}`}>
+          <Button type="primary">Редактировать</Button>
+        </Link>
       </StyledCarItemButtons>
     </StyledCarItemContainer>
   );

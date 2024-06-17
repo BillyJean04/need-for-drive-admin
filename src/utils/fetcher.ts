@@ -10,7 +10,6 @@ export interface Options {
 
 export async function fetcher<T>(options: Options): Promise<T> {
   const { params, headers, body, method, endpoint } = options;
-
   const response = await fetch(`${baseUrl}${endpoint}${params ? `?${params}` : ""}`, {
     headers,
     body,
@@ -25,5 +24,6 @@ export async function fetcher<T>(options: Options): Promise<T> {
   if (!response.ok) {
     return Promise.reject(responseData);
   }
+
   return Promise.resolve(responseData);
 }

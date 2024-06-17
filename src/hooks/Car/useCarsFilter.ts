@@ -4,7 +4,7 @@ import { isEmpty } from "lodash";
 import { useMemo } from "react";
 
 import { Car } from "@/types";
-import { CarApi } from "@/types/api";
+import { CarsApi } from "@/types/api";
 import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
@@ -13,7 +13,7 @@ export function useCarsFilter({ cars, filters }: { cars: Car[]; filters: { categ
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetcher<CarApi>({
+      fetcher<CarsApi>({
         endpoint: Urls.categories,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",
