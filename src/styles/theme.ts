@@ -2,6 +2,7 @@ import { ThemeConfig } from "antd";
 
 export const theme = {
   fontSizes: {
+    "font-10": "10px",
     "font-13": "13px",
     "font-14": "14px",
     "font-15": "15px",
@@ -12,6 +13,8 @@ export const theme = {
     "font-30": "30px",
     "font-32": "32px",
     "font-40": "40px",
+    "font-50": "50px",
+    "font-70": "70px",
   },
 
   colors: {
@@ -22,6 +25,7 @@ export const theme = {
     lightGray: "#CACEDB",
     menuBorder: "#e1e5eb",
     menuItemBg: "#fbfbfb",
+    uploadButton: "#E9ECEF",
     gray: "#999999",
     red: "#C4183C",
     green: "#17C671",

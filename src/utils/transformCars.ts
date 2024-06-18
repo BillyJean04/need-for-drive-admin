@@ -1,7 +1,7 @@
 import { Car } from "@/types";
-import { CarApi } from "@/types/api";
+import { CarsApi } from "@/types/api";
 
-export function transformCars(data: CarApi["data"]) {
+export function transformCars(data: CarsApi["data"]) {
   return data.map(
     (car) =>
       ({

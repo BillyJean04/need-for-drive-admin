@@ -2,7 +2,7 @@ import { Alert, Card, Typography } from "antd";
 import { Key, useContext, useState } from "react";
 
 import { FilterControls } from "@/components";
-import { useCreatePoint, usePointsQuery } from "@/hooks";
+import { useCreatePoint, usePointsQuery } from "@/hooks/Point";
 import { useCitiesQuery } from "@/hooks/useCitiesQuery";
 import { AlertContext } from "@/providers/AlertProvider";
 import { StyledPagination } from "@/styles/global.styled";

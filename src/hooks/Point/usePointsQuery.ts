@@ -31,6 +31,7 @@ export function usePointsQuery({ filters }: { filters: { cityId?: number } }) {
         count: res.count,
       })),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   const pointsPerPage = calculatePageData<Point>({

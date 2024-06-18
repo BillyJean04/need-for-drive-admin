@@ -1,5 +1,7 @@
 import Cookies from "js-cookie";
 
+import { CarField } from "@/types";
+
 export const getHeaders = (token?: string, tokenType?: "Basic" | "Bearer") => ({
   "Content-Type": "application/json",
   "X-Api-Factory-Application-Id": process.env.APPLICATION_ID ?? "",
@@ -48,4 +50,22 @@ export function calculatePageData<T>({
   }
 
   return data;
+}
+
+export function transformCarData(carData: CarField, categoryId?: number) {
+  return {
+    name: carData.model,
+    categoryId: {
+      id: categoryId ?? 0,
+    },
+    priceMin: carData.priceMin,
+    priceMax: carData.priceMax,
+    colors: carData.colors,
+    number: carData.number,
+    tank: Number(carData.tank),
+    description: carData.description ?? "",
+    thumbnail: {
+      path: carData.image,
+    },
+  };
 }

@@ -1,6 +1,6 @@
 import { Table, TableProps } from "antd";
 
-import { useEditPoint } from "@/hooks";
+import { useEditPoint } from "@/hooks/Point";
 import { ProcessingPointModal } from "@/pages/Points/components";
 
 const { Column } = Table;

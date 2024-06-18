@@ -7,32 +7,35 @@ import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
 
-export function useCreatePoint() {
+export function useEditPoint() {
   const queryClient = useQueryClient();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { setAlertOptions, setIsAlertShowing } = useContext(AlertContext);
 
   const mutation = useMutation({
-    mutationFn: (newPoint: { name: string; address: string; cityId: { id: number } }) =>
+    mutationFn: (updatedPoint: {
+      id: number;
+      name: string;
+      address: string;
+      cityId: { id: number };
+    }) =>
       fetcher({
-        endpoint: Urls.points,
-        method: "POST",
-        body: JSON.stringify(newPoint),
+        endpoint: `${Urls.points}/${updatedPoint.id}`,
+        method: "PUT",
+        body: JSON.stringify(updatedPoint),
         headers: new Headers(getHeaders()),
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["points"] });
-    },
+    throwOnError: true,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["points"] }),
   });
 
-  const createPoint = async (fieldsValue: PointField) => {
-    const { name, city, address } = fieldsValue;
-
+  const editPoint = async (fieldsValue: PointField) => {
+    const { name, id, city, address } = fieldsValue;
     try {
       setConfirmLoading(true);
-
       await mutation
         .mutateAsync({
+          id,
           name,
           address,
           cityId: {
@@ -41,20 +44,17 @@ export function useCreatePoint() {
         })
         .then(() => {
           setConfirmLoading(false);
-          setIsAlertShowing(true);
 
-          setAlertOptions({
-            message: "Успех! Пункт выдачи успешно добавлен.",
-            type: "success",
-          });
+          setIsAlertShowing(true);
+          setAlertOptions({ message: "Успех! Пункт выдачи успешно изменен.", type: "success" });
         });
     } catch (error) {
-      throw new Error("В процесее создания пункта выдачи произошла ошибка");
+      throw new Error("В процессе изменения пункта выдачи произошла ошибка");
     }
   };
 
   return {
-    createPoint,
+    editPoint,
     confirmLoading,
   };
 }

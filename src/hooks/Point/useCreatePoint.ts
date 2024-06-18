@@ -7,34 +7,33 @@ import { getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
 
-export function useEditPoint() {
+export function useCreatePoint() {
   const queryClient = useQueryClient();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { setAlertOptions, setIsAlertShowing } = useContext(AlertContext);
 
   const mutation = useMutation({
-    mutationFn: (updatedPoint: {
-      id: number;
-      name: string;
-      address: string;
-      cityId: { id: number };
-    }) =>
+    mutationFn: (newPoint: { name: string; address: string; cityId: { id: number } }) =>
       fetcher({
-        endpoint: `${Urls.points}/${updatedPoint.id}`,
-        method: "PUT",
-        body: JSON.stringify(updatedPoint),
+        endpoint: Urls.points,
+        method: "POST",
+        body: JSON.stringify(newPoint),
         headers: new Headers(getHeaders()),
       }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["points"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["points"] });
+    },
+    throwOnError: true,
   });
 
-  const editPoint = async (fieldsValue: PointField) => {
-    const { name, id, city, address } = fieldsValue;
+  const createPoint = async (fieldsValue: PointField) => {
+    const { name, city, address } = fieldsValue;
+
     try {
       setConfirmLoading(true);
+
       await mutation
         .mutateAsync({
-          id,
           name,
           address,
           cityId: {
@@ -43,17 +42,20 @@ export function useEditPoint() {
         })
         .then(() => {
           setConfirmLoading(false);
-
           setIsAlertShowing(true);
-          setAlertOptions({ message: "Успех! Пункт выдачи успешно изменен.", type: "success" });
+
+          setAlertOptions({
+            message: "Успех! Пункт выдачи успешно добавлен.",
+            type: "success",
+          });
         });
     } catch (error) {
-      throw new Error("В процессе изменения пункта выдачи произошла ошибка");
+      throw new Error("В процесее создания пункта выдачи произошла ошибка");
     }
   };
 
   return {
-    editPoint,
+    createPoint,
     confirmLoading,
   };
 }

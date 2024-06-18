@@ -1,7 +1,7 @@
 import { Button, Modal } from "antd";
 import { Dispatch, Key, SetStateAction } from "react";
 
-import { useDeletePoint } from "@/hooks/useDeletePoint";
+import { useDeletePoint } from "@/hooks/Point";
 
 export interface DeletePointProps {
   selectedRows: Key[];

@@ -2,7 +2,7 @@ import { Card, Empty, Typography } from "antd";
 import { useState } from "react";
 
 import { FilterControls } from "@/components";
-import { useOrdersFilters, useOrdersQuery } from "@/hooks";
+import { useOrdersFilters, useOrdersQuery } from "@/hooks/Order";
 import { StyledPagination } from "@/styles/global.styled";
 import { createRenderArray } from "@/utils";
 import { itemRender } from "@/utils/paginationItemRender";

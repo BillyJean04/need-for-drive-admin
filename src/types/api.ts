@@ -39,9 +39,13 @@ export interface Car {
   categoryId: Category;
 }
 
-export interface CarApi {
+export interface CarsApi {
   data: Car[];
   count: number;
+}
+
+export interface CarApi {
+  data: Car;
 }
 
 export interface CategoryApi {

@@ -5,11 +5,11 @@ import { isEmpty } from "lodash";
 import { useState } from "react";
 
 import { FilterControls } from "@/components";
-import { useCarsFilter } from "@/hooks";
+import { useCarsFilter } from "@/hooks/Car";
 import { StyledEmptyData } from "@/pages/Orders/Orders.styled";
 import { StyledPagination } from "@/styles/global.styled";
 import { Car } from "@/types";
-import { CarApi } from "@/types/api";
+import { CarsApi } from "@/types/api";
 import { calculatePageData, createRenderArray, getHeaders } from "@/utils";
 import { Urls } from "@/utils/consts/urls";
 import { fetcher } from "@/utils/fetcher";
@@ -27,7 +27,7 @@ export function Cars() {
   const { data: cars, isLoading } = useQuery({
     queryKey: ["cars"],
     queryFn: () =>
-      fetcher<CarApi>({
+      fetcher<CarsApi>({
         endpoint: Urls.cars,
         headers: new Headers(getHeaders(Cookies.get("access"), "Bearer")),
         method: "GET",

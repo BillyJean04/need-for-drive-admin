@@ -27,6 +27,7 @@ export function useCitiesQuery() {
           }) satisfies FilterOptions,
       ),
     refetchOnWindowFocus: false,
+    throwOnError: true,
   });
 
   return cities;

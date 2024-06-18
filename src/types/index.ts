@@ -59,3 +59,33 @@ export interface PointField {
   address: string;
   city: number;
 }
+
+export interface CarField {
+  image: string;
+  model: string;
+  category: string;
+  color: string;
+  colors: string[];
+  priceMin: number;
+  priceMax: number;
+  tank: string;
+  number: string;
+  description: string;
+}
+
+export interface CarMutation {
+  id?: string;
+  name: string;
+  priceMax: number;
+  priceMin: number;
+  thumbnail: {
+    path: string;
+  };
+  description: string;
+  categoryId: {
+    id: number;
+  };
+  colors: string[];
+  number: string;
+  tank: number;
+}
