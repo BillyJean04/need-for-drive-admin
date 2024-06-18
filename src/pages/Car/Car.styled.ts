@@ -90,6 +90,10 @@ export const StyledCarText = styled.div`
 `;
 
 export const StyledCarModelText = styled.h3`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 220px;
   ${mixins.textMixin({ $color: "darkBlue", $fontSize: "font-24", $fontWeight: 500 })};
 `;
 

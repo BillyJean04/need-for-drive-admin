@@ -96,6 +96,7 @@ export function useCarForm() {
     const filtered = new Set(colors ? [...colors, color] : [color]);
 
     form.setFieldValue("colors", [...Array.from(filtered)]);
+    form.resetFields(["color"]);
   };
 
   const countFilled = Object.keys(form.getFieldsValue()).filter((elem) => {

@@ -50,55 +50,26 @@ export function CarFormSkeleton() {
       <StyledRightCard>
         <Typography.Title>Настройки автомобиля</Typography.Title>
         <StyledInputsContainer>
-          <Form.Item<CarField>
-            name="model"
-            label="Модель"
-            rules={[{ required: true, max: 150, message: "Пожалуйста, введите модель!" }]}
-          >
+          <Form.Item<CarField> label="Модель">
             <StyledInputSkeleton />
           </Form.Item>
-          <Form.Item<CarField>
-            name="category"
-            label="Категория"
-            rules={[{ required: true, max: 150, message: "Пожалуйста, выберите категорию!" }]}
-          >
+          <Form.Item<CarField> label="Категория">
             <StyledInputSkeleton />
           </Form.Item>
-          <Form.Item<CarField>
-            name="priceMin"
-            label="Минимальная цена"
-            rules={[{ required: true, message: "Пожалуйста, введите минимальную цену!" }]}
-          >
+          <Form.Item<CarField> label="Минимальная цена">
             <StyledInputSkeleton />
           </Form.Item>
-          <Form.Item<CarField>
-            name="priceMax"
-            label="Максимальная цена"
-            rules={[{ required: true, message: "Пожалуйста, введите максимальную цену!" }]}
-          >
+          <Form.Item<CarField> label="Максимальная цена">
             <StyledInputSkeleton />
           </Form.Item>
-          <Form.Item<CarField>
-            name="tank"
-            label="Уровень топлива"
-            rules={[{ required: true, message: "Пожалуйста, введите уровень топлива!" }]}
-          >
+          <Form.Item<CarField> label="Уровень топлива">
             <StyledInputSkeleton />
           </Form.Item>
-          <Form.Item<CarField>
-            name="number"
-            label="Регистрационный номер"
-            rules={[{ required: true, message: "Пожалуйста, введите регистрационный номер!" }]}
-          >
+          <Form.Item<CarField> label="Регистрационный номер">
             <StyledInputSkeleton />
           </Form.Item>
           <StyledColorsContainer>
-            <Form.Item<CarField>
-              label="Доступные цвета"
-              name="color"
-              rules={[{ required: true, message: "Пожалуйста, введите цвет!" }]}
-              style={{ marginBottom: "10px" }}
-            >
+            <Form.Item<CarField> label="Доступные цвета">
               <Space>
                 <Skeleton.Input />
                 <StyledAddColorButton $disabled type="button">

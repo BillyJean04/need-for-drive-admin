@@ -183,9 +183,7 @@ export function Car() {
                     name="category"
                     label="Категория"
                     initialValue={form.getFieldValue("category")}
-                    rules={[
-                      { required: true, max: 150, message: "Пожалуйста, выберите категорию!" },
-                    ]}
+                    rules={[{ required: true, message: "Пожалуйста, выберите категорию!" }]}
                   >
                     <Select onSelect={handleSelectCategory} placeholder="Выберите категорию">
                       {categories?.items.map(({ value, label }) => (
